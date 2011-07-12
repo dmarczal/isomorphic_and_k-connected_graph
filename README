@@ -1,0 +1,77 @@
+Aluno: Diego Marczal
+
+Primeiro trabalho de Grafos
+Assunto Busca em Profundidade e Largura em grafos.
+
+Trabalho desenvolvido em Ruby. Para executar recomenda-se utilizar o ruby na versão
+1.9.2, pois é muito mais rápida que a versão 1.8.7. Porém nas máquinas do DINF apenas
+está instalado a versão 1.8.7, mas pode-se instalar a versão 1.9.2 na própria home.
+
+Explicação do Trabalho:
+
+Tentei seguir o modelo dos arquivos que o professor passou, mas como fiz em Ruby seguindo os
+padrões de OO a codificação ficou um pouco diferente. Caso tenha algum problema por favor me avise.
+
+Para representação computacional dos grafos foi utilizado uma lista de adjacência.
+
+Para busca em profundidade utilizei a estrutura de pilha, onde o último elemento a entrar é o primeiro a
+a sair, para fazer isso utilizei um Array onde adiciono no final e seleciono o último elemento adicionado para
+ser utilizado.
+
+Para busca em largura utilizei a estrutura de fila (lista FIFO First in First Out). O primeiro a entrar é o
+primeiro a sair. Para essa, estrutura também utilizei uma Array onde adiciono no final da array e
+seleciono o primeiro elemento para ser utilizado.
+
+Como ruby é interpretado e não compilado o arquivo make apenas atribui permissão de execução para os arquivos
+bfs e dfs.
+
+Arquivos:
+  dfs
+    Arquivo executável para a busca em profundidade. Ele utiliza a classe Busca e a Classe
+    DfsSelector.
+  dfs
+    Arquivo executável para a busca em largura. Para busca ele utiliza o classe Busca e a Classe
+    BfsSelector.
+  
+  Busca
+    Classe genérica que através da biblioteca LibGraph lê os dados para criar o grafo,
+    faz a busca no grafo através da classe Search e de um Selector, e imprime o resultado da busca. 
+        
+  lib -> Diretório que contém os arquivos necessários para a busca 
+     Search
+        Classe que realiza uma busca genérica em um grafo. Faz uso da biblioteca LibGraph e deve ser instanciada
+        com um parâmetro do tipo selector.
+     Selector
+        Classe genérica que possui as características comuns de um selector utilizado na busca da classe Search
+     DfsSelector         
+        Classe filha de Selector que define o comportamento do selector como uma pilha para que a classe Search
+        possa realizar um busca em profundidade.
+     BfsSelector         
+        Classe filha de Selector que define o comportamento do selector como uma fila para que a classe Search
+        possa realizar um busca em em largura.
+     Graph  
+        Classe que descreve um grafo através de uma lista de adjacência. Faz uso da classe Node e também da classe
+        Edge. Através do grafo pode-se visitar vértice, visitar arestas, pegar vértice pegar aresta entre outras coisas.
+        (Nesta parte fique com dúvida se deixava alguns comportamento aqui ou na LibGraph, achei melhor deixar em Graph,
+        e libGraph utilizar eles, pois uma das regras de OO é quem deve tratar os dados e quem os possuí.)
+     Node
+        Classe que representa um vértice de um grafo, possui os atributos nome, visitado e vizinhos.
+     Edge
+        Classe que representa uma aresta do grafo, possui os vértices que ligam essa aresta, o atributo visitado e nome
+     LibGraph
+        Biblioteca para trabalhar com o grafos representado no padrão da classe Graph
+  
+  spec -> diretório que contém arquivos de testes.
+    Tento desenvolver meus projetos seguindo a metodologia TDD ou BDD, para isso utilizo algumas bibliotecas que me
+    auxiliam. Os arquivos desta pasta são destinados a isso.
+    
+  testes -> diretório que contém alguns arquivos para testes referente a entrada de dados que professor passou
+      entradas -> diretório onde deve ficar os arquivos referentes as entradas de dados
+      resp_bfs -> diretório onde deve ficar os arquivos com as respostas das entradas da busca em largura
+      resp_dfs -> diretório onde deve ficar os arquivos com as respostas das entradas da busca em profundidade
+
+  teste.sh
+      script que executa o algoritmo com as entradas da pasta testes e compara as respostas do algoritmo com as respostas
+      contidas na pasta resp_bfs e res_dfs.
+
+Muito Obrigado!
