@@ -63,12 +63,20 @@ Para todo k ∈ ℕ, dizemos que um grafo G é K-conexo se
 
 Alternativamente, um grafo é k-conexo se k é tamanho do menor subconjunto 
 de vértices, que quando removidos torna o grafo desconexo [3].
-De outra maneira, ainda pode-se dizer que um grafo é k-conexo se remover k-1 vértices, 
-k-2 vértices .. 1 vértices e ele ainda continua conexo.
 
 Outra definição de k-conexo segundo [5], se for sempre possível estabelecer um caminho
 de qualquer vértice para qualquer outro vértice mesmo depois de remover k-1 vértices,
 então diz-se que o grafo está k-conexo.
+
+Seja G um grafo
+  - seja n = |V(G)|
+  - se G é k-conexo então k < n
+  - nenhum grafo G é n-conexo
+  - para G ser k-conexo, para todo S subconjunto de V(G), com |S| < k,
+    G-S é conexo
+  - Então se G é k-conexo, ele é (k-1)-conexo
+  - Para verificar se G é k-conexo basta testar os conjuntos S tal que |S| = k-1
+  - se G é completo com n vértices, então G é (n-1)-conexo (de acordo com estas definições)
 
 Por exemplo, o grafo A é 2-conexo, pois:
 - removendo-se dois vértices (e.g. 1 e 4) tornamos o grafo desconexo.
@@ -85,37 +93,35 @@ Por exemplo, o grafo A é 2-conexo, pois:
 O grafo b é 1-conexo, pois se, pois k-1 = 0 então removendo 0 vértices ele ainda é conexo.
 Mas ele não é 2-conexo, porque 2 não é menor |V(G)| (k < |V(G)|)
 
-
 Para determinar se um grafo G é k-conexo verifica-se
 1 - se k > 0 e se k < |V(G)|, caso não seja então pela definição de k-conexo ele não pode
 ser k-conexo
 
-2 - verifica-se se G é conexo, pois para ser k-conexo, G tem que ser conexo.
-
-2.1 Verificar se é conexo.
-  Para verificar se G é conexo realiza-se uma busca em largura em G, para busca em largura
-  é utilizado o mesmo algoritmo, do trabalho 1, apenas removendo-se, os parâmetros, entra
-  sai, pai.
-
-  A busca em Largura inicia-se com um vértice arbitrário do grafo e explora todos os 
-  vizinhos desse vértice. Então, para cada um desses nós mais próximos, explora-se os 
-  seus vizinhos inexplorados, e assim por diante, até que todos os vizinhos sejam explorados[4].
-
-  Sendo assim, a Busca em Largura modifica o estados do vértices de um grafo de não visitado para visitado, 
-  quando existe um caminho entre os vértices. Caso algum vértice de G não seja visitado então conclui-se
-  que G é desconexo.
-
-  Aqui pode-se usar, qualquer algoritmo de busca que respeite a conectividade imposta pelas aresta. Mas como, implementei
-  a busca em largura no primeiro trabalho preferi utilizar ela.
-
-  3- Após verifica-se se G é k-conexo
-    3.1
+2 - Verifica-se se G é k-conexo
+    2.1
       Para verificar se G é k-conexo faz-se a combinação do vértices de G combinados
       k-1 a k-1.
       Então para cada combinação, retira-se os vértices pertencentes a combinação de G e verifica 
       se G continua conexo.
       Isso, se repete para todas as combinações. Se G for conexo para remoção de todas combinações então
       G é k-conexo. (Utilizei dessa forma, de acordo com a definição de k-conexo de [5])
+
+    2.2 Verificar se é conexo.
+      Para verificar se G é conexo realiza-se uma busca em largura em G, para busca em largura
+      é utilizado o mesmo algoritmo, do trabalho 1, apenas removendo-se, os parâmetros, entra
+      sai, pai.
+    
+      A busca em Largura inicia-se com um vértice arbitrário do grafo e explora todos os 
+      vizinhos desse vértice. Então, para cada um desses nós mais próximos, explora-se os 
+      seus vizinhos inexplorados, e assim por diante, até que todos os vizinhos sejam explorados[4].
+    
+      Sendo assim, a Busca em Largura modifica o estados do vértices de um grafo de não visitado para visitado, 
+      quando existe um caminho entre os vértices. Caso algum vértice de G não seja visitado então conclui-se
+      que G é desconexo.
+    
+      Aqui pode-se usar, qualquer algoritmo de busca que respeite a conectividade imposta pelas aresta. Mas como, implementei
+      a busca em largura no primeiro trabalho preferi utilizar ela.
+
 
 
 Referências
