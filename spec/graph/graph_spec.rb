@@ -1,25 +1,45 @@
-require 'graph'
-require 'node'
+require 'lib/graph/graph'
+require 'lib/graph/node'
+require 'mixins/graph_creation'
 
 describe Graph do
+  include GraphCreation
 
   before(:each) do
-    @graph = Graph.new(4)
-    @graph.add_edge(1, 2) 
-    @graph.add_edge(1, 3)
-    @graph.add_edge(2, 4)
-    @graph.add_edge(3, 4)
+    @graph = create_graph(4, [1, 2], [1, 3],
+                             [2, 4], [3, 4])
   end
 
   it "should create a graph" do
     puts @graph
   end
 
-  # ------------- edge ------------------------------- #
+  it "should return the vector of degree in descreasing order" do
+    @graph_b = create_graph(6, [1, 2], [1, 3],
+                               [2, 4], [3, 4],
+                               [2, 6])
 
+    @graph.degree_vector == [2, 2, 2, 2]
+    @graph_b.degree_vector == [3, 2, 2, 2, 1, 0]
+  end 
+  
+  it "should return the bigest degree" do
+     @graph_b = create_graph(6, [1, 2], [1, 3],
+                               [2, 4], [3, 4],
+                               [2, 6])
+
+    @graph_b.max_degree.should == 3
+  end
+
+
+  # ------------- edge ------------------------------- #
   it "should return a edge" do
     @graph.edge(2,4).to.name.should == 4
     @graph.edge(4,2).from.name.should == 4
+  end
+
+  it "should return the number of edges" do
+    @graph.number_of_edges.should == 4
   end
 
   it "should verify if a egde is on the graph" do
@@ -81,4 +101,10 @@ describe Graph do
     @graph.neighbour_not_visit_of(4).should == 3
   end
 
+  # remove a vertex #
+  it "should remove a vertex" do
+    @graph.remove_vertex(1)
+    @graph.vertex(1).should be_nil
+    @graph.vertex(2).neighbours.include?(1).should be_false
+  end
 end

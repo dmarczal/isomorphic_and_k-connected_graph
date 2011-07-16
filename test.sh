@@ -6,39 +6,41 @@ function c_echo(){
 
 function execute()
 {
-  mkdir -p testes/resultados
-  
+  c_echo "Carregando dados"
+
+  contador=0
+  arquivos=
+
+  cd tests/input/$1
+
+  for i in *
+  do
+    arquivos[$contador]=$i
+    let "contador = contador + 1"
+  done
+
+  cd .. 
+  cd ..
+  cd ..
+
+  mkdir -p tests/results
+
   for arquivo in ${arquivos[@]}; do
     c_echo "Executando: $arquivo"
-    ./$1 < testes/entradas/$arquivo > testes/resultados/$arquivo
+    ./$1 < tests/input/$1/$arquivo > tests/results/$arquivo
     c_echo "Comparando Resposta"
-    diff testes/resp_$1/$arquivo testes/resultados/$arquivo
+    diff tests/output/resp_$1/$arquivo tests/results/$arquivo
     echo "-----------------------------------------------"
   done
-  rm -rf testes/resultados
+  rm -rf tests/results
 }
 
-c_echo "Carregando dados"
-
-contador=0
-arquivos=
-
-cd testes/entradas
-
-for i in *
-do
-  arquivos[$contador]=$i
-  let "contador = contador + 1"
-done
-
-cd .. 
-cd ..
 
 echo "-----------------------------------------------"
-c_echo "Executando Busca em Profundidade"
+c_echo "Executando Teste de Isomorfismo em Grafos"
 echo "-----------------------------------------------"
 
-execute "dfs"
+execute "isomorfos"
 
 echo "|||||||||||||||||||||||||||||||||||||||||||||||"
 
@@ -46,7 +48,7 @@ echo "-----------------------------------------------"
 c_echo "Executando Busca em Largura"
 echo "-----------------------------------------------"
 
-execute "bfs"
+#execute "k-conexo"
 
 
 

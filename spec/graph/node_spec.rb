@@ -1,4 +1,4 @@
-require 'node'
+require 'lib/graph/node'
 
 describe Node do
 
@@ -18,14 +18,26 @@ describe Node do
   end
 
   it "should return the next neighbour" do
-    @node.add_neighbour(2)
-    @node.add_neighbour(1)
-    @node.add_neighbour(3)
+    add_neighbours(2, 4, 3)
     @node.next_neighbour.should == 2
+    @node.next_neighbour.should == 4
     @node.next_neighbour.should == 3
     @node.next_neighbour.should == nil
     @node.next_neighbour.should == 2
   end
+ 
+  it "should return the degree " do
+     add_neighbours(2, 4, 3)
+     @node.degree.should == 3
+  end
+
+private
+def add_neighbours(*neighbours)
+  neighbours.each do |n|
+    @node.add_neighbour(n)
+  end
+end
+
 
 #  it "should be the same node if they have the same name" do
 #    node = Node.new(1)

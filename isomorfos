@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+$: << File.dirname(__FILE__)
+
+require 'lib/isomorphic/isomorphic'
+require 'mixins/lib_graph'
+
+include LibGraph
+graphs = read_file_matriz_adjacency
+
+i = Isomorphic.new
+puts i.isomorphic?(graphs[1], graphs[2]) ? 1 : 0

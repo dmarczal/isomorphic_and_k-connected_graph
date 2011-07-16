@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+$: << File.dirname(__FILE__)
+require 'mixins/lib_graph'
+require 'lib/kconexo/k_conexo'
+include LibGraph
+
+k = KConexo.new
+
+graph = read_file_to_adjacency_list
+
+puts k.k_conexo?(graph['k'], graph['graph']) ? 1 : 0

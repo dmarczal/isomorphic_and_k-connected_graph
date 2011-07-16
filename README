@@ -1,77 +1,134 @@
 Aluno: Diego Marczal
 
-Primeiro trabalho de Grafos
-Assunto Busca em Profundidade e Largura em grafos.
+Segundo trabalho da disciplina de Grafos
 
-Trabalho desenvolvido em Ruby. Para executar recomenda-se utilizar o ruby na versão
-1.9.2, pois é muito mais rápida que a versão 1.8.7. Porém nas máquinas do DINF apenas
-está instalado a versão 1.8.7, mas pode-se instalar a versão 1.9.2 na própria home.
+O trabalho desenvolvido em Ruby. Para executar recomenda-se utilizar o ruby na versão 1.9.2,
+pois possui um performance maior em relação a versão 1.8.7.
+Porém nas máquinas do DINF apenas está instalado a versão 1.8.7, mas, pode-se instalar a versão 1.9.2 na própria home.
 
-Explicação do Trabalho:
+Os problemas escolhidos foram, isomorfismo de grafos e k-conexidade
 
-Tentei seguir o modelo dos arquivos que o professor passou, mas como fiz em Ruby seguindo os
-padrões de OO a codificação ficou um pouco diferente. Caso tenha algum problema por favor me avise.
+Para executar o algoritmo utilize o comando
+./isomorfos < arquivo_com_as_matrizes_de_adjacências
+./k-conexo < arquivo com matriz de adjacência
 
-Para representação computacional dos grafos foi utilizado uma lista de adjacência.
+O arquivo make apenas da permissão de execução para os arquivos isomorfos, e k-conexo
 
-Para busca em profundidade utilizei a estrutura de pilha, onde o último elemento a entrar é o primeiro a
-a sair, para fazer isso utilizei um Array onde adiciono no final e seleciono o último elemento adicionado para
-ser utilizado.
+OBS: para os dois algoritmos considerei que as matrizes de entradas estão corretas, ou seja, 
+se elas possuem o mesmo número de linhas e colunas.
 
-Para busca em largura utilizei a estrutura de fila (lista FIFO First in First Out). O primeiro a entrar é o
-primeiro a sair. Para essa, estrutura também utilizei uma Array onde adiciono no final da array e
-seleciono o primeiro elemento para ser utilizado.
+Descrição dos algoritmos.
 
-Como ruby é interpretado e não compilado o arquivo make apenas atribui permissão de execução para os arquivos
-bfs e dfs.
+1- Grafos isomorfos.
 
-Arquivos:
-  dfs
-    Arquivo executável para a busca em profundidade. Ele utiliza a classe Busca e a Classe
-    DfsSelector.
-  dfs
-    Arquivo executável para a busca em largura. Para busca ele utiliza o classe Busca e a Classe
-    BfsSelector.
-  
-  Busca
-    Classe genérica que através da biblioteca LibGraph lê os dados para criar o grafo,
-    faz a busca no grafo através da classe Search e de um Selector, e imprime o resultado da busca. 
-        
-  lib -> Diretório que contém os arquivos necessários para a busca 
-     Search
-        Classe que realiza uma busca genérica em um grafo. Faz uso da biblioteca LibGraph e deve ser instanciada
-        com um parâmetro do tipo selector.
-     Selector
-        Classe genérica que possui as características comuns de um selector utilizado na busca da classe Search
-     DfsSelector         
-        Classe filha de Selector que define o comportamento do selector como uma pilha para que a classe Search
-        possa realizar um busca em profundidade.
-     BfsSelector         
-        Classe filha de Selector que define o comportamento do selector como uma fila para que a classe Search
-        possa realizar um busca em em largura.
-     Graph  
-        Classe que descreve um grafo através de uma lista de adjacência. Faz uso da classe Node e também da classe
-        Edge. Através do grafo pode-se visitar vértice, visitar arestas, pegar vértice pegar aresta entre outras coisas.
-        (Nesta parte fique com dúvida se deixava alguns comportamento aqui ou na LibGraph, achei melhor deixar em Graph,
-        e libGraph utilizar eles, pois uma das regras de OO é quem deve tratar os dados e quem os possuí.)
-     Node
-        Classe que representa um vértice de um grafo, possui os atributos nome, visitado e vizinhos.
-     Edge
-        Classe que representa uma aresta do grafo, possui os vértices que ligam essa aresta, o atributo visitado e nome
-     LibGraph
-        Biblioteca para trabalhar com o grafos representado no padrão da classe Graph
-  
-  spec -> diretório que contém arquivos de testes.
-    Tento desenvolver meus projetos seguindo a metodologia TDD ou BDD, para isso utilizo algumas bibliotecas que me
-    auxiliam. Os arquivos desta pasta são destinados a isso.
-    
-  testes -> diretório que contém alguns arquivos para testes referente a entrada de dados que professor passou
-      entradas -> diretório onde deve ficar os arquivos referentes as entradas de dados
-      resp_bfs -> diretório onde deve ficar os arquivos com as respostas das entradas da busca em largura
-      resp_dfs -> diretório onde deve ficar os arquivos com as respostas das entradas da busca em profundidade
+Dizemos que os grafos G e H são isomorfos e, nesse caso escrevemos G ≃ H, se existe uma função bijetora.
+F: V(G) -> V(H) tal que {u,v} pertencem E(G) <-> {f(u),f(v)} pertencem E(H) para todos  u,v pertencentes
+a V(G). Uma função f com acima é chamada de isomorfismo[2]
 
-  teste.sh
-      script que executa o algoritmo com as entradas da pasta testes e compara as respostas do algoritmo com as respostas
-      contidas na pasta resp_bfs e res_dfs.
+Outra definição, dois grafos são isomorfos se é possível renomear os vértices de um dos grafos para que os
+dois grafos fique idênticos.
+Ou ainda, dois Grafos são isomórficos se, e somente, se seus vértices podem ser rotulados 
+de tal forma que as correspondentes matrizes de adjacências são iguais[5].
 
-Muito Obrigado!
+Para verificar se os grafos são isomorfos realizei um permutação por todas possíveis matrizes
+de um dos grafos e comparei com o outro grafo. Caso encontre uma matriz equivalente então os grafos
+são isomorfos.
+
+Para o algoritmo dos grafos isomórficos.
+
+1. Verifica-se se os grafos possuem o mesmo número de vértices.
+2. Verifica-se se os grafos possuem o mesmo número de arestas.
+3. Verifica-se se os grafos possuem o mesmo vetor de graus.
+
+4. Permuta-se a matriz de um dos grafos e compara com o outro grafo.
+   Se uma das das permutações for verdadeira então os grafos são isomorfos.
+   Se todas permutações são falsas então os grafos não são isomorfos.
+
+   4.1 Permutação
+       1. Gera-se uma permutação dos vértices de G
+       2. Compara-se as as matrizes da seguinte maneira
+          matriz_a[x][y] == matriz_b[permutacao[x]permutacao[y]] para todo x, y da matriz.
+       3. Se for verdade para todos x,y então os grafos são isomorfos.
+       4. Caso não seja verdade para um dos x,y então gera-se a próxima permutação e faz-se o
+       teste novamente.
+       5. Os grafos não são isomorfos se para nenhuma das permutações existiu correspondência.
+
+Caso um dos passos seja falso, os grafos não são isomorfos.
+
+2 - k-conexidade
+
+Para todo k ∈ ℕ, dizemos que um grafo G é K-conexo se
+- |V(G)| > k
+- Não existe um U ⊂ V(G) de cardinalidade |U| < k que G - U é desconexo [2].
+
+Alternativamente, um grafo é k-conexo se k é tamanho do menor subconjunto 
+de vértices, que quando removidos torna o grafo desconexo [3].
+De outra maneira, ainda pode-se dizer que um grafo é k-conexo se remover k-1 vértices, 
+k-2 vértices .. 1 vértices e ele ainda continua conexo.
+
+Outra definição de k-conexo segundo [5], se for sempre possível estabelecer um caminho
+de qualquer vértice para qualquer outro vértice mesmo depois de remover k-1 vértices,
+então diz-se que o grafo está k-conexo.
+
+Por exemplo, o grafo A é 2-conexo, pois:
+- removendo-se dois vértices (e.g. 1 e 4) tornamos o grafo desconexo.
+- 2 < |V(G)|
+
+  1---2
+  |   |
+  3---4
+ Grafo A.
+
+ 1 --- 2
+ Grafo B
+
+O grafo b é 1-conexo, pois se, pois k-1 = 0 então removendo 0 vértices ele ainda é conexo.
+Mas ele não é 2-conexo, porque 2 não é menor |V(G)| (k < |V(G)|)
+
+
+Para determinar se um grafo G é k-conexo verifica-se
+1 - se k > 0 e se k < |V(G)|, caso não seja então pela definição de k-conexo ele não pode
+ser k-conexo
+
+2 - verifica-se se G é conexo, pois para ser k-conexo, G tem que ser conexo.
+
+2.1 Verificar se é conexo.
+  Para verificar se G é conexo realiza-se uma busca em largura em G, para busca em largura
+  é utilizado o mesmo algoritmo, do trabalho 1, apenas removendo-se, os parâmetros, entra
+  sai, pai.
+
+  A busca em Largura inicia-se com um vértice arbitrário do grafo e explora todos os 
+  vizinhos desse vértice. Então, para cada um desses nós mais próximos, explora-se os 
+  seus vizinhos inexplorados, e assim por diante, até que todos os vizinhos sejam explorados[4].
+
+  Sendo assim, a Busca em Largura modifica o estados do vértices de um grafo de não visitado para visitado, 
+  quando existe um caminho entre os vértices. Caso algum vértice de G não seja visitado então conclui-se
+  que G é desconexo.
+
+  Aqui pode-se usar, qualquer algoritmo de busca que respeite a conectividade imposta pelas aresta. Mas como, implementei
+  a busca em largura no primeiro trabalho preferi utilizar ela.
+
+  3- Após verifica-se se G é k-conexo
+    3.1
+      Para verificar se G é k-conexo faz-se a combinação do vértices de G combinados
+      k-1 a k-1.
+      Então para cada combinação, retira-se os vértices pertencentes a combinação de G e verifica 
+      se G continua conexo.
+      Isso, se repete para todas as combinações. Se G for conexo para remoção de todas combinações então
+      G é k-conexo. (Utilizei dessa forma, de acordo com a definição de k-conexo de [5])
+
+
+Referências
+
+[1] Dharwadker, A. e John-Tagore Tevet. 'The Graph Isomorphism Algorithm'.
+    Disponível em:http://www.geocities.com/dharwadker/tevet/isomorphism/
+
+[2] http://www.ime.usp.br/~jair/ci065/#x1-4000012
+
+[3] http://en.wikipedia.org/wiki/K-vertex-connected_graph
+
+[4] http://www.land.ufrj.br/~classes/grafos/slides/aula_6.pdf
+
+[5] http://pt.wikipedia.org/wiki/Teoria_dos_grafos
+
+[6] http://pt.wikipedia.org/wiki/Isomorfismo_de_grafos

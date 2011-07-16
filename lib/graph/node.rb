@@ -5,6 +5,7 @@ class Node
     @name = name
     @neighbours = []
     @current = 0;
+    @number_of_neibours = 0
   end
 
   def visit?
@@ -16,12 +17,27 @@ class Node
   end
 
   def add_neighbour(node)
-    #node.add_neighbour(@name)
-    @neighbours << node unless (@neighbours.include?(node) || node.eql?(@name))
+    unless (@neighbours.include?(node) || node.eql?(@name))
+        @neighbours << node
+        @number_of_neibours +=1
+    end
   end
 
   def neighbours
     @neighbours
+  end
+
+  def neighbour(index)
+    @neighbours[index]
+  end
+  
+  def remove_neighbour(n)
+    n = @neighbours.delete(n)
+    @number_of_neibours -= 1 unless n.nil?
+  end
+
+  def degree
+    @number_of_neibours
   end
 
   def next_neighbour
@@ -33,7 +49,6 @@ class Node
   def reset_neighbourhood
     @current = 0
   end
-
 
 #  def eql?(other)
 #    if other.instance_of? Node

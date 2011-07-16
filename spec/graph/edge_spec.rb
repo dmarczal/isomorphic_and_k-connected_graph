@@ -1,4 +1,4 @@
-require 'edge'
+require 'lib/graph/edge'
 
 describe Edge do
 
