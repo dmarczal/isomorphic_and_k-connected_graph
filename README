@@ -10,7 +10,7 @@ Os problemas escolhidos foram, isomorfismo de grafos e k-conexidade
 
 Para executar o algoritmo utilize o comando
 ./isomorfos < arquivo_com_as_matrizes_de_adjacências
-./k-conexo < arquivo com matriz de adjacência
+./k-conexo < arquivo_com_matriz_de_adjacência
 
 O arquivo make apenas da permissão de execução para os arquivos isomorfos, e k-conexo
 
@@ -30,9 +30,10 @@ dois grafos fique idênticos.
 Ou ainda, dois Grafos são isomórficos se, e somente, se seus vértices podem ser rotulados 
 de tal forma que as correspondentes matrizes de adjacências são iguais[5].
 
-Para verificar se os grafos são isomorfos realizei um permutação por todas possíveis matrizes
-de um dos grafos e comparei com o outro grafo. Caso encontre uma matriz equivalente então os grafos
-são isomorfos.
+Para verificar se os grafos são isomorfos realizei um permutação de todos os vértices possíveis de um 
+dos grafos, cada permutação gera um matriz que pode ser comparada com a matriz de outro grafo para
+verificar se são isomorfícos. Caso as matrizes sejam iguais os grafos são isomorícos, se para todas
+as permutações não forem iguais então os grafos não são isomorfícos.
 
 Para o algoritmo dos grafos isomórficos.
 
@@ -40,14 +41,16 @@ Para o algoritmo dos grafos isomórficos.
 2. Verifica-se se os grafos possuem o mesmo número de arestas.
 3. Verifica-se se os grafos possuem o mesmo vetor de graus.
 
-4. Permuta-se a matriz de um dos grafos e compara com o outro grafo.
+4. Permuta-se os vértices de um dos grafo e através deles gera-se uma matriz, como descrito abaixo,
+   para compará-la com a matriz de outro grafo.	   
+	
    Se uma das das permutações for verdadeira então os grafos são isomorfos.
    Se todas permutações são falsas então os grafos não são isomorfos.
 
    4.1 Permutação
        1. Gera-se uma permutação dos vértices de G
        2. Compara-se as as matrizes da seguinte maneira
-          matriz_a[x][y] == matriz_b[permutacao[x]permutacao[y]] para todo x, y da matriz.
+          matriz_a[x][y] == matriz_b[permutacao[x]][permutacao[y]] para todo x, y da matriz.
        3. Se for verdade para todos x,y então os grafos são isomorfos.
        4. Caso não seja verdade para um dos x,y então gera-se a próxima permutação e faz-se o
        teste novamente.
@@ -99,6 +102,10 @@ ser k-conexo
 
 2 - Verifica-se se G é k-conexo
     2.1
+      Verifica-se k > 0 e k < n, onde n é o número de vertíces, se k satisfaz essas condições 
+      então o algoritmo procede, senão retorna falso.
+
+    2.2 
       Para verificar se G é k-conexo faz-se a combinação do vértices de G combinados
       k-1 a k-1.
       Então para cada combinação, retira-se os vértices pertencentes a combinação de G e verifica 
@@ -106,7 +113,7 @@ ser k-conexo
       Isso, se repete para todas as combinações. Se G for conexo para remoção de todas combinações então
       G é k-conexo. (Utilizei dessa forma, de acordo com a definição de k-conexo de [5])
 
-    2.2 Verificar se é conexo.
+    2.3 Verificar se é conexo.
       Para verificar se G é conexo realiza-se uma busca em largura em G, para busca em largura
       é utilizado o mesmo algoritmo, do trabalho 1, apenas removendo-se, os parâmetros, entra
       sai, pai.
@@ -119,8 +126,7 @@ ser k-conexo
       quando existe um caminho entre os vértices. Caso algum vértice de G não seja visitado então conclui-se
       que G é desconexo.
     
-      Aqui pode-se usar, qualquer algoritmo de busca que respeite a conectividade imposta pelas aresta. Mas como, implementei
-      a busca em largura no primeiro trabalho preferi utilizar ela.
+      Aqui pode-se usar, qualquer algoritmo de busca que respeite a conectividade imposta pelas aresta. Mas como, 	   implementei a busca em largura no primeiro trabalho preferi utilizar ela.
 
 
 
